@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build directories
+dist/
+build/
+coverage/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor and OS specific files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+.vs/
+Thumbs.db
+
+# Temp files
+tmp/
+temp/
+.cache/
+
+# Debug files
+.debug/ 

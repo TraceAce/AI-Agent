@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: granite-chatbot-backend
+    restart: unless-stopped
+    ports:
+      - "3009:3009"
+    env_file:
+      - .env
+    environment:
+      - PORT=${PORT}
+      - FLOWISE_CHATBOT_ID=${FLOWISE_CHATBOT_ID}
+      - FLOWISE_API_URL=${FLOWISE_API_URL}
+      - FLOWISE_API_KEY=${FLOWISE_API_KEY}
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build: ./frontend
+    container_name: granite-chatbot-frontend
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+
+  mongo:
+    image: mongo:7.0
+    container_name: granite-chatbot-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    name: granite-chatbot-network
+    driver: bridge 
